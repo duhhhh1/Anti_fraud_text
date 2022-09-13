@@ -17,7 +17,6 @@
 
 ```shell
 git clone [仓库url] 
-1
 ```
 
 ## 3. 创建自己的分支
@@ -29,19 +28,18 @@ git branch [your branch]
 git checkout [your branch] #切换到自己的分支 
 #也可以修改本地分支的名称
 git branch -m [old_name] [new_name]
-1234
+
 ```
 
 ## 4. 添加自己的远程仓库地址
 
 url表示远程仓库的地址，有两种url可以选择：
-`git@github.com:facebookresearch/maskrcnn-benchmark.git` (配置好本地秘钥后可以直接push)
-`https://github.com/facebookresearch/maskrcnn-benchmark.git` (每次push需要输入账号和密码)
+git@github.com:HaomingX/Anti_fraud_text.git (配置好本地秘钥后可以直接push)
+`https://github.com/HaomingX/Anti_fraud_text.git` (每次push需要输入账号和密码)
 shortname可以是远程url的名称,默认是origin,可以自己定义名称
 
 ```shell
 git remote add [shortname] [url]
-1
 ```
 
 ## 5. 修改提交
@@ -49,7 +47,6 @@ git remote add [shortname] [url]
 ```shell
 git add -u #-u表示只增加文件修改，不添加新创建的文件
 git commit -m "本次提交的描述"
-12
 ```
 
 ## 6. 推送到自己的仓库
@@ -57,7 +54,6 @@ git commit -m "本次提交的描述"
 ```shell
 git remote -v # 查看远程link
 git push [自己的仓库url名] [分支名] #例如git push origin master 或者git push [my_repo_url] new_branch
-12
 ```
 
 ## 7. 推送到官方仓库
@@ -67,10 +63,9 @@ git push [自己的仓库url名] [分支名] #例如git push origin master 或�
 git remote add upstream git@github.com:facebookresearch/maskrcnn-benchmark.git
 # 合并官方仓库分支和本地自己修改的分支
 git fetch origin
-git merge origin/master
+git merge origin/main
 # 推送到官方仓库master分支
-git push upstream master 
-1234567
+git push upstream main 
 ```
 
 ## 8. 与上游保持一致
@@ -78,10 +73,10 @@ git push upstream master
 ```shell
 # 获取上游更新
 git fetch upstream
-git checkout master
+git checkout main
 # merge
-git merge upstream/master
+git merge upstream/main
 
 # 推送到自己的仓库
-git push origin master
+git push origin main
 ```
