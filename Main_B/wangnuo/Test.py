@@ -57,7 +57,7 @@ def main():
         numAll += 1
         data = data.split(',')
         label = int(data[0])
-        sentence = np.array([int(x) for x in data[0:256]])
+        sentence = np.array([int(x) for x in data[1:256]])
         sentence = torch.from_numpy(sentence)
         predict = net(sentence.unsqueeze(0).type(torch.LongTensor)).cpu().detach().numpy()[0]  # .cuda()).cpu().detach().numpy()[0]
         label_pre, score = parse_net_result(predict)

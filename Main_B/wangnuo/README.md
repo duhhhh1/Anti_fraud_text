@@ -1,5 +1,3 @@
----
-
 data文件夹下是原始data和生成的data：
 
 ​	my_traindata.json是原始数据
@@ -14,9 +12,9 @@ data文件夹下是原始data和生成的data：
 
 ​	traindata和valdata是训练集和测试集，9：1
 
----
 
-wordtable.py 分词（用的分字，注释部分有分词代码）并且计算词频
+
+wordtable.py 分词并且计算词频
 
 sen2inds.py 除停用词并且向量化
 
@@ -28,7 +26,6 @@ train.py 训练模型
 
 test.py 测试
 
----
 
 
 
