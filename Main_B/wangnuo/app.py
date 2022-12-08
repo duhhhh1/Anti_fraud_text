@@ -4,13 +4,14 @@ from model import textCNN
 import torch
 from sen2inds import read_labelFile, get_worddict
 import numpy as np
+import time
 
 app = Flask(__name__)
 
 
 @app.route('/')
 def home():
-	return render_template('home.html')
+	return render_template('index.html')
 
 
 @app.route('/predict', methods=['POST'])
@@ -33,10 +34,11 @@ def predict():
 
 	if request.method == 'POST':
 		message = request.form['message']
-		print(message)
+		print(type(message))
 		# data = [message]
 		# vect = cv.transform(data).toarray()
 		title_seg = list(message)
+		print(title_seg)
 		title_ind = []
 		for w in title_seg:
 			if w in stoplist:
@@ -53,9 +55,7 @@ def predict():
 		score = max(predict)
 		label = np.where(predict == score)[0][0]
 
-	return render_template('result.html',prediction = label)
-
-
+	return render_template('detect.html',prediction = label, message = message, time_text = str(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())))
 
 if __name__ == '__main__':
 	app.run(debug=True)
