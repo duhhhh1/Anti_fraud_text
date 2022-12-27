@@ -7,8 +7,8 @@ import time
 from model import textCNN
 import sen2inds
 
-word2ind, ind2word = sen2inds.get_worddict('data/wordLabel.txt')
-label_w2n, label_n2w = sen2inds.read_labelFile('data/label.txt')
+word2ind, ind2word = sen2inds.get_worddict('wangnuo/data/wordLabel.txt')
+label_w2n, label_n2w = sen2inds.read_labelFile('wangnuo/data/label.txt')
 
 textCNN_param = {
     'vocab_size': len(word2ind),
@@ -37,7 +37,7 @@ def main():
     #init net
     print('init net...')
     net = textCNN(textCNN_param)
-    weightFile = 'weight.pkl'
+    weightFile = 'wangnuo/model/22120519_model_iter_99_64_loss_0.00.pkl'
     if os.path.exists(weightFile):
         print('load weight')
         net.load_state_dict(torch.load(weightFile))
@@ -52,7 +52,7 @@ def main():
     numAll = 0
     numRight = 0
 
-    testData = get_valData('data/valdata_vec.txt')
+    testData = get_valData('wangnuo/data/valdata_vec.txt')
     for data in testData:
         numAll += 1
         data = data.split(',')

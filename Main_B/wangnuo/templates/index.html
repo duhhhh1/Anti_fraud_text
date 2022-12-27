@@ -1,74 +1,120 @@
 <!DOCTYPE html>
-<html lang="zh-cn">
+<html lang="en">
 <head>
-	<meta charset="utf-8"/>
-	<title>诈骗案情分类</title>
-	<style type="text/css">
-	body{font-family: 'Microsoft Yahei'; font-size: 16px;}
-	* {
-		-webkit-box-sizing: border-box;
-		-moz-box-sizing: border-box;
-		box-sizing: border-box;
-	}
-	input[type="text"] {
-		height: 34px;
-		padding: 6px 12px;
-		font-size: 14px;
-		line-height: 1.42857143;
-		color: #555;
-		background-color: #fff;
-		background-image: none;
-		border: 1px solid #ccc;
-		border-radius: 4px;
-		box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-		-webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
-		transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
-	}
-	input[type="text"]:focus {
-		border-color: #66afe9;
-		outline: 0;
-		-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
-		box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
-	}
-	#test {width: 300px;}
-	h2 {
-		background-color: #3199E4;
-		color: white;
-		padding: 2px 8px;
-		border-radius: 5px;
-		font-size: 30px;
-		line-height: 1.5;
-		text-shadow: 1px 1px 1px black;
-		width: 800px;
-	}
-	h2 > span {
-		color: #B10000;
-		font-size: 0.8em;
-	}
-	#test {margin-top: 10px;}
-	.loading-tip{color: #00960A;margin-bottom: 10px;}
-	.container {
-		width: 1024px;
-		margin: 20px auto;
-	}
-	</style>
-</head>
+    <title>反诈文本分类</title>
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">    
+    <link rel="shortcut icon" href="favicon.ico">  
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <!-- FontAwesome JS -->
+    <script defer src="static/assets/fontawesome/js/all.js"></script>
+    <!-- Global CSS -->
+    <link rel="stylesheet" href="static/assets/plugins/bootstrap/css/bootstrap.min.css">   
+    <!-- Plugins CSS -->    
+    <link rel="stylesheet" href="static/assets/plugins/elegant_font/css/style.css">    
+    <!-- Theme CSS -->
+    <link id="theme-style" rel="stylesheet" href="static/assets/css/styles.css">
 
-<body>
-	<div class="container">
-		<h2>诈骗案情分类</h2>
-		
-    <label for="guessField">请输入待识别案情简述: </label>
-		<form id="fm_upload" method="POST" enctype="multipart/form-data" action="{{ url_for('predict')}}">
-			<textarea name="message" id="i_test" cols="100" rows="10"></textarea>
-			<input name="aha" type="submit" id="i_aha" value="predict" />
-		</form>
-		<h3>识别结果：</h3>
-		<div id="result"></div>
-		<h3>识别时间：</h3>
-		<div id="time"></div>
-		
-	</div>
+</head> 
 
+<body class="landing-page">   
+	
+	<!-- GITHUB BUTTON JS -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+     
+    <!--FACEBOOK LIKE BUTTON JAVASCRIPT SDK-->
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v6.0&appId=994736563909741&autoLogAppEvents=1"></script>
+    
+    <div class="page-wrapper">
+        
+        <!-- ******Header****** -->
+        <header class="header text-center">
+            <div class="container">
+                <div class="branding">
+                    <h1 class="logo">
+                        <span aria-hidden="true" class="icon_documents_alt icon"></span>
+                        <span class="text-highlight">反诈文本</span><span class="text-bold">分类</span>
+                    </h1>
+                </div><!--//branding-->
+                
+	             <div class="main-search-box pt-3 pb-4 d-inline-block">
+                    <form id="fm_upload" method="POST" enctype="multipart/form-data" action="{{ url_for('predict')}}">
+                        <textarea name="message" id="i_test" cols="75" rows="10" placeholder="请输入待分类文本"></textarea>
+                        <input name="aha" type="submit" class="form-control border-light"id="i_aha" value="predict" />
+                    </form>
+	             </div>
+                <div class="social-container">
+	                <!-- Replace with your Github Button -->
+	                <div class="github-btn mb-2">
+						<a class="github-button" href="https://github.com/HaomingX/Anti_fraud_text" data-size="large" aria-label="Star HaomingX/Anti_fraud_text on GitHub">Star</a>
+	                </div>
+                 </div><!--//social-container-->
+                 
+                
+            </div><!--//container-->
+        </header><!--//header-->
+        
+        <section class="cards-section text-center">
+            <div class="container">
+                <h2 class="title">反诈文本分类</h2>
+                <div class="intro">
+                    <p>本项目先后采取SVM等机器学习方法，TextCNN，fasttext, Bert等方法实现文本分类的训练。</p>
+                </div><!--//intro-->
+                <div id="cards-wrapper" class="cards-wrapper row">
+                    <div class="item item-green col-lg-4 col-6">
+                        <div class="item-inner">
+                            <div class="icon-holder">
+                                <i class="icon fa fa-paper-plane"></i>
+                            </div><!--//icon-holder-->
+                            <h3 class="title">Quick Start</h3>
+                            <p class="intro">一个简单的教程</p>
+                            <a class="link" href="{{ url_for('charts')}}"><span></span></a>
+                        </div><!--//item-inner-->
+                    </div><!--//item-->
+                    <div class="item item-pink item-2 col-lg-4 col-6">
+                        <div class="item-inner">
+                            <div class="icon-holder">
+                                <span aria-hidden="true" class="icon icon_puzzle_alt"></span>
+                            </div><!--//icon-holder-->
+                            <h3 class="title">Components</h3>
+                            <p class="intro">还不知道是啥</p>
+                            <a class="link" href="{{ url_for('charts')}}"><span></span></a>
+                        </div><!--//item-inner-->
+                    </div><!--//item-->
+                    <div class="item item-blue col-lg-4 col-6">
+                        <div class="item-inner">
+                            <div class="icon-holder">
+                                <span aria-hidden="true" class="icon icon_datareport_alt"></span>
+                            </div><!--//icon-holder-->
+                            <h3 class="title">Charts</h3>
+                            <p class="intro">一些可视化分析</p>
+                            <a class="link" href="{{ url_for('charts')}}" ><span></span></a>
+                        </div><!--//item-inner-->
+                    </div><!--//item-->
+                </div><!--//cards-->
+                
+            </div><!--//container-->
+        </section><!--//cards-section-->
+    </div><!--//page-wrapper-->
+    
+    <footer class="footer text-center">
+        <div class="container">
+            <small class="copyright">成员：徐浩铭、 杜佳兴、 樊宇宇、 王雅斌</small>
+            
+        </div><!--//container-->
+    </footer><!--//footer-->
+    
+     
+    <!-- Main Javascript -->       
+    <script src="static/assets/plugins/bootstrap/js/bootstrap.min.js"></script>     
+    <script src="static/assets/plugins/stickyfill/dist/stickyfill.min.js"></script>                                                                
+    <script src="static/assets/js/main.js"></script>
+    
 </body>
-</html>
+</html> 
+

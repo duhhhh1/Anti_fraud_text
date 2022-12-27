@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="utf-8"/>
+	<title>诈骗案情分类</title>
+	<style type="text/css">
+	body{font-family: 'Microsoft Yahei'; font-size: 16px;}
+	* {
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+	}
+	input[type="text"] {
+		height: 34px;
+		padding: 6px 12px;
+		font-size: 14px;
+		line-height: 1.42857143;
+		color: #555;
+		background-color: #fff;
+		background-image: none;
+		border: 1px solid #ccc;
+		border-radius: 4px;
+		box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+		-webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+		transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+	}
+	input[type="text"]:focus {
+		border-color: #66afe9;
+		outline: 0;
+		-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+		box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+	}
+	#test {width: 300px;}
+	h2 {
+		background-color: #3199E4;
+		color: white;
+		padding: 2px 8px;
+		border-radius: 5px;
+		font-size: 30px;
+		line-height: 1.5;
+		text-shadow: 1px 1px 1px black;
+		width: 800px;
+	}
+	h2 > span {
+		color: #B10000;
+		font-size: 0.8em;
+	}
+	#test {margin-top: 10px;}
+	.loading-tip{color: #00960A;margin-bottom: 10px;}
+	.container {
+		width: 1024px;
+		margin: 20px auto;
+	}
+	</style>
+</head>
+
+<body>
+	<div class="container">
+		<h2>诈骗案情分类</h2>
+		
+    <label for="guessField">请输入待识别文本: </label>
+		<form id="fm_upload" method="POST" enctype="multipart/form-data" action="">
+			<textarea name="message" id="i_test" cols="100" rows="10">{{ message }}</textarea>
+			<input name="aha" type="submit" id="i_aha" value="predict" />
+		</form>
+		<h3>识别结果：</h3>
+		<div id="result">
+			{% if prediction == 0%}
+			<label>冒充电商物流客服类</label>
+			{% elif prediction == 1%}
+			<label>贷款、代办信用卡类</label>
+			{% elif prediction == 2%}
+			<label>虚假网络投资理财类</label>
+			{% elif prediction == 3%}
+			<label>冒充领导、熟人类</label>
+			{% elif prediction == 4%}
+			<label>冒充公检法及政府机关类</label>
+			{% elif prediction == 5%}
+			<label>网络游戏产品虚假交易类</label>
+			{% elif prediction == 6%}
+			<label>刷单返利类</label>
+			{% elif prediction == 7%}
+			<label>其他类型诈骗</label>
+			{% elif prediction == 8%}
+			<label>虚假征信类</label>
+			{% elif prediction == 9%}
+			<label>冒充军警购物类诈骗</label>
+			{% elif prediction == 10%}
+			<label>虚假购物、服务类</label>
+			{% elif prediction == 11%}
+			<label>网黑案件</label>
+			{% elif prediction == 12%}
+			<label>网络婚恋、交友类（非虚假网络投资理财类）</label>
+			{% endif %}
+		</div>
+		<h3>识别时间：</h3>
+		<div id="time">
+			<label>{{ time_text }}</label>
+		</div>
+		
+	</div>
+
+</body>
+</html>

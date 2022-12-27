@@ -1,20 +1,22 @@
 from flask import Flask, render_template, url_for, request
-import pickle
 from model import textCNN
 import torch
 from sen2inds import read_labelFile, get_worddict
 import numpy as np
 import time
+import re
 
 app = Flask(__name__)
 
-
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def home():
 	return render_template('index.html')
 
+@app.route('/index', methods=['GET', 'POST'])
+def index():
+	return render_template('index.html')
 
-@app.route('/predict', methods=['POST'])
+@app.route('/predict', methods=['POST', 'GET'])
 def predict():
 	label_w2n, label_n2w = read_labelFile('data/label.txt')
 	word2ind, ind2word = get_worddict('data/wordLabel.txt')
@@ -34,11 +36,22 @@ def predict():
 
 	if request.method == 'POST':
 		message = request.form['message']
-		print(type(message))
+		message_copy = message
+		message = message.replace("年", "-").replace("月", "-").replace("日", "-").replace("时", "-").replace("分", " ").strip()
+		message = re.sub("\s+", "", message)
+		# 2022年6月14日18时01分许 "2022年6月7日" "2014年5月"
+		# [^\u4e00-\u9fa5]  除去字符
+		regex_list = [r"(\d{4}-\d{1,2}-\d{1,2}-\d{1,2}-\d{1,2})|(\d{4}-\d{1,2}-\d{1,2})|(\d{4}-\d{1,2})",
+					r"[_.!+-=——,$%^，：“”（）:。？、~@#￥%……&*《》<>「」{}【】()/]",
+					]
+		for regex in regex_list:
+			pattern = re.compile(regex)
+			message = re.sub(pattern,'',message)
+		# print(type(message))
 		# data = [message]
 		# vect = cv.transform(data).toarray()
 		title_seg = list(message)
-		print(title_seg)
+		# print(title_seg)
 		title_ind = []
 		for w in title_seg:
 			if w in stoplist:
@@ -55,7 +68,11 @@ def predict():
 		score = max(predict)
 		label = np.where(predict == score)[0][0]
 
-	return render_template('detect.html',prediction = label, message = message, time_text = str(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())))
+	return render_template('detect.html',prediction = label, message = message_copy, time_text = str(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())))
+
+@app.route('/charts', methods=['GET', 'POST'])
+def charts():
+	return render_template('charts.html')
 
 if __name__ == '__main__':
 	app.run(debug=True)

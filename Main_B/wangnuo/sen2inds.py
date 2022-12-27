@@ -5,7 +5,7 @@ import sys, io
 import jieba
 import random
 
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer,encoding='gb18030') #改变标准输出的默认编码
+# sys.stdout = io.TextIOWrapper(sys.stdout.buffer,encoding='gb18030') #改变标准输出的默认编码
 
 trainFile = 'data/my_traindata.json'
 stopwordFile = 'data/stopword.txt'
@@ -21,8 +21,8 @@ def read_labelFile(file):
     data = open(file, 'r', encoding='utf_8').read().split('\n')
     label_w2n = {}
     label_n2w = {}
-    for line in data:
-        line = line.split(' ')
+    for Line in data:
+        line = Line.split(' ')
         name_w = line[0]
         name_n = int(line[1])
         label_w2n[name_w] = name_n
