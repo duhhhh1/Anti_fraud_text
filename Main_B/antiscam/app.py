@@ -25,7 +25,7 @@ class NpEncoder(json.JSONEncoder):
             return obj.tolist() # add this line
         return json.JSONEncoder.default(self, obj)   
 app = Flask(__name__)
-openai.api_key = "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"
+openai.api_key = ""
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
