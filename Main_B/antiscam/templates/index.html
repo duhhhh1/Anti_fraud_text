@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>反诈文本分类</title>
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">    
+    <link rel="shortcut icon" href="favicon.ico">  
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <!-- FontAwesome JS -->
+    <script defer src="static/assets/fontawesome/js/all.js"></script>
+    <!-- Global CSS -->
+    <link rel="stylesheet" href="static/assets/plugins/bootstrap/css/bootstrap.min.css">   
+    <!-- Plugins CSS -->    
+    <link rel="stylesheet" href="static/assets/plugins/elegant_font/css/style.css">    
+    <!-- Theme CSS -->
+    <link id="theme-style" rel="stylesheet" href="static/assets/css/styles.css">
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script> -->
+</head> 
+
+<body class="landing-page">   
+	
+	<!-- GITHUB BUTTON JS -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+     
+    <!--FACEBOOK LIKE BUTTON JAVASCRIPT SDK-->
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v6.0&appId=994736563909741&autoLogAppEvents=1"></script>
+    
+    <div class="page-wrapper">
+        
+        <!-- ******Header****** -->
+        <header class="header text-center">
+            <div class="container">
+                <div class="branding">
+                    <h1 class="logo">
+                        <span aria-hidden="true" class="icon_documents_alt icon"></span>
+                        <span class="text-highlight">反诈文本</span><span class="text-bold">分类</span>
+                    </h1>
+                </div><!--//branding-->
+                <div class="main-search-box pt-3 pb-4 d-inline-block">
+	            <form  name="form1" id="fm_upload" method="POST" enctype="multipart/form-data" >
+                    <textarea name="message" id="i_test" cols="75" rows="10" placeholder="请输入待分类文本">{{ message }}</textarea>
+                    <input name="aha" type="button"  id="i_aha" class="form-control border-light" value="predict" /><br>
+                    <!-- class="form-control border-light" -->
+                    <select id="selectmodel" style="width:300px;text-align:center;text-align-last:center;height:25px;" >
+                        <option value ="FastText">by FastText</option>
+                        <option value ="TextCNN">by TextCNN</option>
+                        <option value ="ChatGPT">by ChatGPT</option>
+                    </select>
+                    <script>
+                        $(function() {
+                            // body...
+                            $("#i_aha").click(function(){
+                                message=$("#i_test").val();
+                                model=$('#selectmodel').val();
+                                var flag=false;
+                                $.ajax({
+                                url: "{{ url_for('predict')}}",
+                                type: "POST",
+                                data:{"message":message,"model":model},
+                                dataType: "json",
+                                success: function (data) {
+                                // alert(data.name + ":" + data.age);
+                                if(model=='TextCNN' || model=='FastText'){
+                                    var dic = new Array(); //定义一个字典    
+                                    dic[0] = '冒充电商物流客服类';  
+                                    dic[1] = '贷款、代办信用卡类';
+                                    dic[2] = '虚假网络投资理财类';
+                                    dic[3] = '冒充领导、熟人类';
+                                    dic[4] = '冒充公检法及政府机关类';
+                                    dic[5] = '网络游戏产品虚假交易类';
+                                    dic[6] = '刷单返利类';
+                                    dic[7] = '其他类型诈骗';
+                                    dic[8] = '虚假征信类';
+                                    dic[9] = '冒充军警购物类诈骗';
+                                    dic[10] = '虚假购物、服务类';
+                                    dic[11] = '网黑案件';
+                                    dic[12] = '网络婚恋、交友类（非虚假网络投资理财类）';
+                                    $("#result").html(dic[data.prediction]);
+                                    $("#time").html(data.time_text);
+                                    $('#resulttitle').html(""+model+"识别结果");
+                                    $('#timetitle').html("识别时间");
+                                    flag=true;
+                                    console.log(data)
+                                }else if(model=='ChatGPT'){
+                                    $("#result").html(data.result);
+                                    $('#resulttitle').html("ChatGPT识别结果");
+                                    $('#timetitle').html("");
+                                    $("#time").html("");
+                                    flag=true;
+                                    console.log(data)
+                                }
+                            },
+                                })                                
+                            })
+                           
+                        })								
+
+                    </script>
+                </form>
+            </div>
+            <br><br>
+                <div>
+                    <h3 id="resulttitle" class="text-highlight"></h3>
+				<h4 id="result"></h4>
+				    <h3 id="timetitle" class="title"></h3>
+				<h4 id="time"></h4>
+                </div>                   
+                <br>
+                <div>
+                    <h3 id="gptresulttitle" class="title"></h3>
+                    <h4 id="gptresult"></h3>
+				</div>
+                <div class="social-container">
+	                <!-- Replace with your Github Button -->
+	                <div class="github-btn mb-2">
+						<a class="github-button" href="https://github.com/HaomingX/Anti_fraud_text" data-size="large" aria-label="Star HaomingX/Anti_fraud_text on GitHub">Star</a>
+	                </div>
+                 </div><!--//social-container-->
+                 
+                
+            </div><!--//container-->
+        </header><!--//header-->
+        
+        <section class="cards-section text-center">
+            <div class="container">
+                <h2 class="title">反诈文本分类</h2>
+                <div class="intro">
+                    <p>本项目先后采取SVM等机器学习方法，TextCNN，fasttext, Bert等方法实现文本分类的训练。</p>
+                </div><!--//intro-->
+                <div id="cards-wrapper" class="cards-wrapper row">
+                    <div class="item item-green col-lg-4 col-6">
+                        <div class="item-inner">
+                            <div class="icon-holder">
+                                <i class="icon fa fa-paper-plane"></i>
+                            </div><!--//icon-holder-->
+                            <h3 class="title">Quick Start</h3>
+                            <p class="intro">一个简单的教程</p>
+                            <a class="link" href="{{ url_for('start')}}"><span></span></a>
+                        </div><!--//item-inner-->
+                    </div><!--//item-->
+                    <div class="item item-pink item-2 col-lg-4 col-6">
+                        <div class="item-inner">
+                            <div class="icon-holder">
+                                <span aria-hidden="true" class="icon icon_puzzle_alt"></span>
+                            </div><!--//icon-holder-->
+                            <h3 class="title">Reference Project</h3>
+                            <p class="intro">参考项目</p>
+                            <a class="link" href="https://github.com/649453932/Chinese-Text-Classification-Pytorch"><span></span></a>
+                        </div><!--//item-inner-->
+                    </div><!--//item-->
+                    <div class="item item-blue col-lg-4 col-6">
+                        <div class="item-inner">
+                            <div class="icon-holder">
+                                <span aria-hidden="true" class="icon icon_datareport_alt"></span>
+                            </div><!--//icon-holder-->
+                            <h3 class="title">Charts</h3>
+                            <p class="intro">一些可视化分析</p>
+                            <a class="link" href="{{ url_for('charts')}}" ><span></span></a>
+                        </div><!--//item-inner-->
+                    </div><!--//item-->
+                </div><!--//cards-->
+                
+            </div><!--//container-->
+        </section><!--//cards-section-->
+    </div><!--//page-wrapper-->
+    
+    <footer class="footer text-center">
+        <div class="container">
+            <small class="copyright">成员：徐浩铭、 杜佳兴、 樊宇宇、 王雅斌</small>
+            
+        </div><!--//container-->
+    </footer><!--//footer-->
+    
+     
+    <!-- Main Javascript -->       
+    <script src="static/assets/plugins/bootstrap/js/bootstrap.min.js"></script>     
+    <script src="static/assets/plugins/stickyfill/dist/stickyfill.min.js"></script>                                                                
+    <script src="static/assets/js/main.js"></script>
+    
+</body>
+</html> 
+
